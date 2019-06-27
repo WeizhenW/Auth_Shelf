@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import { connect } from 'react-redux';
 
 // This is one of our simplest components
 // It doesn't have local state, so it can be a function component.
@@ -6,9 +7,20 @@ import React, { Component } from 'react';
 // or even care what the redux state is, so it doesn't need 'connect()'
 
 class InfoPage extends Component {
+
+  componentDidMount(){
+    this.props.dispatch({
+      type: 'FETCH_ITEMS',
+    })
+  }
+
   render() {
     return (
   <div>
+    <pre>
+      {JSON.stringify(this.props.reduxState.user, null, 2)}
+      {JSON.stringify(this.props.reduxState.itemReducer, null, 2)}
+    </pre>
     <p>
       Shelf Page
     </p>
@@ -16,5 +28,7 @@ class InfoPage extends Component {
   </div>
  )}
 }
-
-export default InfoPage;
+const mapReduxStateToProps = reduxState => ({
+  reduxState,
+})
+export default connect(mapReduxStateToProps)(InfoPage);
