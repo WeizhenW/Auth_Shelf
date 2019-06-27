@@ -10,7 +10,9 @@ const { rejectUnauthenticated } = require('../modules/authentication-middleware'
 router.get('/', rejectUnauthenticated, (req, res) => {
     console.log('req.user', req.user);
     pool.query('SELECT * FROM "item"')
-    .then(result => res.send(result.rows))
+    .then(result => {
+        res.send(result.rows)
+    })
     .catch(error => {
         console.log('error making SELECT for shelf:', error);
         res.sendStatus(500); 
@@ -22,7 +24,15 @@ router.get('/', rejectUnauthenticated, (req, res) => {
  * Add an item for the logged in user to the shelf
  */
 router.post('/', (req, res) => {
-
+    // console.log('req.user:', req.user.id);
+    // console.log('req.body:', req.body.description, req.body.image_url)
+    // res.sendStatus(200)
+    pool.query(`INSERT INTO "item" ("description", "image_url", "user_id")
+    VALUES ($1, $2, $3);`, [req.body.description, req.body.image_url, req.user.id]).then(response => {
+        res.sendStatus(201)
+    }).catch (error => {
+        console.log('error posting images:', error)
+    })
 });
 
 

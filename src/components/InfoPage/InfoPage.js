@@ -8,9 +8,14 @@ import { connect } from 'react-redux';
 
 class InfoPage extends Component {
 
+
   componentDidMount() {
+    this.getImages();
+  }
+
+  getImages = () => {
     this.props.dispatch({
-      type: 'FETCH_ITEMS',
+      type: 'FETCH_ITEMS'
     })
   }
 
@@ -19,19 +24,50 @@ class InfoPage extends Component {
       type: 'DELETE_ITEM',
       payload: item,
     })
+  }
 
-    console.log('in handle delete');
+
+  state = {
+    description: '',
+    image_url: '',
+  }
+
+  handleImage = (event) => {
+    this.setState({
+      ...this.state,
+      image_url: event.target.value
+    })
+  }
+
+  handleDescription = (event) => {
+    this.setState({
+      ...this.state,
+      description: event.target.value
+    })
+  }
+
+  handleClick = () => {
+    // console.log('this.state:', this.state);
+    this.props.dispatch({ type: 'POST_IMAGE', payload: this.state });
+    this.setState({
+      description: '',
+      image_url: ''
+    })
+
   }
 
   render() {
     return (
       <div>
-        <pre>
-          {JSON.stringify(this.props.reduxState.user, null, 2)}
-          {JSON.stringify(this.props.reduxState.itemReducer, null, 2)}
-        </pre>
+        {/* {JSON.stringify(this.props)} */}
         <p>
-          Shelf Page
+          Shelf Page<br /><br />
+          NEED TO ADD THE FETCH BOOKS TO THE ADD BOOKS<br /><br />
+          <label>Image Source URL</label><br />
+          <input onChange={this.handleImage} value={this.state.image_url} /><br /><br />
+          <label>Description</label><br />
+          <textarea rows="4" cols="100" onChange={this.handleDescription} value={this.state.description}></textarea><br />
+          <button onClick={this.handleClick}>Add to Shelf</button>
         </p>
         <ul>
           {this.props.reduxState.itemReducer.length !== 0 && this.props.reduxState.itemReducer.map(item => {
@@ -53,7 +89,9 @@ class InfoPage extends Component {
     )
   }
 }
+
 const mapReduxStateToProps = reduxState => ({
   reduxState,
 })
 export default connect(mapReduxStateToProps)(InfoPage);
+
