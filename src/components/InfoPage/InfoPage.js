@@ -8,7 +8,7 @@ import { connect } from 'react-redux';
 
 class InfoPage extends Component {
 
-  componentDidMount(){
+  componentDidMount() {
     this.props.dispatch({
       type: 'FETCH_ITEMS',
     })
@@ -16,17 +16,26 @@ class InfoPage extends Component {
 
   render() {
     return (
-  <div>
-    <pre>
-      {JSON.stringify(this.props.reduxState.user, null, 2)}
-      {JSON.stringify(this.props.reduxState.itemReducer, null, 2)}
-    </pre>
-    <p>
-      Shelf Page
+      <div>
+        <pre>
+          {/* {JSON.stringify(this.props.reduxState.user, null, 2)}
+          {JSON.stringify(this.props.reduxState.itemReducer[0], null, 2)} */}
+        </pre>
+        <p>
+          Shelf Page
     </p>
-    
-  </div>
- )}
+        <ul>
+          {this.props.reduxState.itemReducer.map(item => {
+            return <li key={item.id}>
+              <p>{item.description}</p>
+              <img src={item.image_url} alt="pic" />
+            </li>
+          }
+          )}
+        </ul>
+      </div>
+    )
+  }
 }
 const mapReduxStateToProps = reduxState => ({
   reduxState,
