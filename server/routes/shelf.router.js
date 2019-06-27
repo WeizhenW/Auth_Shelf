@@ -9,7 +9,7 @@ const { rejectUnauthenticated } = require('../modules/authentication-middleware'
  */
 router.get('/', rejectUnauthenticated, (req, res) => {
     console.log('req.user', req.user);
-    pool.query('SELECT * FROM "item" WHERE "user_id" = $1', [req.user.id])
+    pool.query('SELECT * FROM "item"')
     .then(result => res.send(result.rows))
     .catch(error => {
         console.log('error making SELECT for shelf:', error);

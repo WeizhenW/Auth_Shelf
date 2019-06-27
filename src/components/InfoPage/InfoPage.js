@@ -18,17 +18,24 @@ class InfoPage extends Component {
     return (
       <div>
         <pre>
-          {/* {JSON.stringify(this.props.reduxState.user, null, 2)}
-          {JSON.stringify(this.props.reduxState.itemReducer[0], null, 2)} */}
+          {JSON.stringify(this.props.reduxState.user, null, 2)}
+          {JSON.stringify(this.props.reduxState.itemReducer, null, 2)}
         </pre>
         <p>
           Shelf Page
-    </p>
+        </p>
         <ul>
           {this.props.reduxState.itemReducer.map(item => {
             return <li key={item.id}>
               <p>{item.description}</p>
               <img src={item.image_url} alt="pic" />
+              {this.props.reduxState.user.id === item.user_id ?
+                <>
+                  <br />
+                  <button>Delete</button>
+                </>
+                :
+                <></>}
             </li>
           }
           )}
