@@ -14,6 +14,15 @@ class InfoPage extends Component {
     })
   }
 
+  handleDeleteItem = (item) => {
+    this.props.dispatch({
+      type: 'DELETE_ITEM',
+      payload: item,
+    })
+
+    console.log('in handle delete');
+  }
+
   render() {
     return (
       <div>
@@ -25,14 +34,14 @@ class InfoPage extends Component {
           Shelf Page
         </p>
         <ul>
-          {this.props.reduxState.itemReducer.map(item => {
+          {this.props.reduxState.itemReducer.length !== 0 && this.props.reduxState.itemReducer.map(item => {
             return <li key={item.id}>
               <p>{item.description}</p>
               <img src={item.image_url} alt="pic" />
               {this.props.reduxState.user.id === item.user_id ?
                 <>
                   <br />
-                  <button>Delete</button>
+                  <button onClick={() => this.handleDeleteItem(item)}>Delete</button>
                 </>
                 :
                 <></>}
