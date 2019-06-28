@@ -92,6 +92,7 @@ class LoginPage extends Component {
 // const mapStateToProps = ({errors}) => ({ errors });
 const mapStateToProps = state => ({
   errors: state.errors,
+  userReducer: state.userReducer,
 });
 
 export default connect(mapStateToProps)(LoginPage);
