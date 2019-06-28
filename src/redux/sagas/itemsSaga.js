@@ -45,9 +45,21 @@ function* deleteItem(action) {
   }
 }
 
+function* postImage(action) {
+  try {
+    // console.log('postImage:', action.payload)
+    yield axios.post('/api/shelf', action.payload);
+   //yield for get Images
+    yield put({type: 'FETCH_ITEMS'});
+  } catch (error) {
+      console.log('Error with image post:', error);
+  }
+}
+
 function* itemsSaga() {
   yield takeLatest('FETCH_ITEMS', fetchItems);
   yield takeLatest('DELETE_ITEM', deleteItem);
+  yield takeLatest('POST_IMAGE', postImage);
 
 }
 

@@ -62,7 +62,6 @@ class InfoPage extends Component {
         {/* {JSON.stringify(this.props)} */}
         <p>
           Shelf Page<br /><br />
-          NEED TO ADD THE FETCH BOOKS TO THE ADD BOOKS<br /><br />
           <label>Image Source URL</label><br />
           <input onChange={this.handleImage} value={this.state.image_url} /><br /><br />
           <label>Description</label><br />
